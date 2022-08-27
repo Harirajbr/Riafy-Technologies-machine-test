@@ -4,6 +4,7 @@ import { View,Image,Platform, ListView,Text,BackHandler,TouchableHighlight,Alert
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import test from '../../assets/json/test.json'
 
 
 
@@ -11,67 +12,47 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 var {height, width} = Dimensions.get('window');
 
-const Articlecard = () => {
+const Foodcard = () => {
 
 
-  const [articleResponse, setarticleResponse] = useState(null);
+  const [articleResponse, setarticleResponse] = useState(test);
   
   useEffect(() => {
-    fetch('https://api.nytimes.com/svc/mostpopular/v2/mostviewed/all-sections/7.json?api-key=mZRsL6fhU0pAIbE3M2GHc71xZL1AbJre')
-      .then(results => results.json())
-      .then(data => {
-        console.log("api_response", data.results);   
-        setarticleResponse(data.results);
-        
-      });
+    console.log('json',articleResponse)
+    
   }, []);
 
  
 
   function renderCard(item, index) {
+
         return (
-            <View style={styles.itemcardContainer}>
-
-               <View style={styles.card}>
-                   <View style={styles.circleview}>
-                     <FontAwesome name={'circle'} style={styles.circle}  />
-                   </View> 
-                   <View style={styles.description}>
-                     <Text numberOfLines={2} ellipsizeMode='tail' style={styles.item}>{item.title}</Text>
-                     <Text numberOfLines={2} ellipsizeMode='tail' style={styles.subtext}>{item.byline}</Text>
-                     <View style={styles.calendarview}>
-                       <FontAwesome name={'calendar-o'} style={styles.calendar}  />
-                       <Text  ellipsizeMode='tail' style={styles.date}>{item.published_date}</Text>
-                     </View> 
-                   </View>  
-                   <TouchableOpacity style={styles.arrowview}>
-                     <FontAwesome name={'angle-right'} style={styles.arrow}  />
-                   </TouchableOpacity>
-               </View>  
-            </View> 
+          
+          <View style={styles.wrapper}>
+             <Image style={styles.image} source={{uri:item.imageUrl}}/>
+             <Text  style={styles.item}>{item.Ingredient}</Text>
+             <Text  style={styles.sub_item} numberOfLines={2} ellipsizeMode='tail' >{item["Short text"]}</Text>
+          </View>
+            
         )
     }
 
-    function renderSeparator(){
-      return(
-        <View style={styles.cardseperator}>
-        </View>
-        )
-    }
+   
 
   return (
 
-    <View style={styles.container}>
+    <View>
     {articleResponse ? 
         <FlatList  
-          data={articleResponse}  
+          data={articleResponse} 
+          numColumns={2}
+          columnWrapperStyle={styles.row}
           renderItem={({ item, key }) => renderCard(item, key)}
-          ItemSeparatorComponent={()=>renderSeparator()}
           showsVerticalScrollIndicator={false}
+
          />  
          :
          <Text style={styles.loader}>Loading...</Text>
-
 
     }
 
@@ -82,84 +63,44 @@ const Articlecard = () => {
 };
 
 const styles = StyleSheet.create({
-  itemcardContainer: {
-    height:height/5,
-    backgroundColor:'#fafafa',
-    alignItems:'center',
-    width:width/1.05,
-
+  
+  row:{
+      flex:1,
+      justifyContent: "space-around"
   },
-  card:{
-    alignItems:'center',
-    flexDirection:'row',
+ 
+  image:{
+    width:width/2.2,
+    height:height/5
   },
 
   item: {
-    
     fontSize:14,
     color:'black',
     alignItems:'center',
+    width:width/2.2,
+  },
+  sub_item:{
+    fontSize:11,
+    color:'grey',
+    alignItems:'center',
+    width:width/3,
 
   },
- 
-  circle:{
-    color:'#9a9a9a',
-    fontSize:40
-  },
-  arrow:{
-    color:'#9a9a9a',
-    fontSize:25
-  },
-  calendar:{
-    color:'#9a9a9a',
-    fontSize:15
-  },
-  subtext:{
-    paddingTop:15,
-    color:'#9a9a9a',
-    padding:3
-
-  },
-  date:{
-    color:'#9a9a9a',
-    fontSize:12,
-    marginLeft:5,
-    alignItems:'flex-end',
-
-  },
-  cardseperator:{
-    height:10
-  },
-  description:{
-    height:height/5,
-    width:width*2/3,
-    justifyContent:'center'
-  },
-  circleview:{
-    height:height/5,
-    justifyContent:'center',
-    width:width/8,
-    alignItems:'center'
-  },
-  calendarview:{
-    flexDirection:'row',
-    width:width/1.5,
-    justifyContent:'flex-end'
-  },
-  arrowview:{
-    height:height/5,
-    justifyContent:'center',
-    width:width/8,
-    alignItems:'center'
-  },
+  
   loader:{
     marginTop:height/3,
     color:'blue',
     fontSize:16
+  },
+  wrapper:{
+    backgroundColor:'yellow',
+    margin:5,
+    padding:5
   }
  
   
 });
 
 
-export default Articlecard;
+export default Foodcard;

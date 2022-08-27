@@ -3,16 +3,20 @@ import React ,{useState,useEffect,Component} from 'react';
 import { View,Image,Platform, ListView,Text,BackHandler,TouchableHighlight,Alert,TouchableWithoutFeedback,ActivityIndicator,Picker,ImageBackground,TouchableOpacity,Dimensions,StyleSheet,Modal,ScrollView,TextInput,FlatList} from 'react-native'
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Articlecard from '../articles/article.js';
+import Foodcard from '../articles/article.js';
+
 
 
 
 
 var {height, width} = Dimensions.get('window');
 
+
+
 const Home = () => {
 
   useEffect(() => {
+
     
   }, []);
 
@@ -22,12 +26,14 @@ const Home = () => {
 
     <View style={styles.container}>
         <View style={styles.header}>
-          <Fontisto name={'nav-icon-a'} style={styles.hamberger_icon}/>
-          <Text style={styles.text}>NY Times Most Popular</Text>
-          <Ionicons name={'search'} style={styles.search_icon}/>
-          <Fontisto name={'more-v-a'} style={styles.dot_icon}/>
+          <Text style={styles.header_text}>Search</Text>
         </View>
-      <View styles={{marginTop:20}}><Articlecard/></View>
+        <View style={styles.searchbar}>
+          <Ionicons name={'search'} style={styles.search_icon}/>
+          <Text style={styles.food_search_label}>Food name</Text>
+        </View>
+        <View style={{marginTop:20,width:width,backgroundColor:'#f7f7f7'}}><Foodcard/></View>
+      
     </View>
 
     );
@@ -37,38 +43,52 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    backgroundColor:'#eeeeee',
-    alignItems:'center'
+    alignItems:'center',
+    backgroundColor:'white'
   },
   header: {
-    backgroundColor:'#70e5c3',
-    height:height/10,
-    width:width/1.05,
-    borderTopWidth:2,
-    borderColor:'#335fa8',
-    justifyContent:'space-around',
-    alignItems:'center',
-    flexDirection:'row',
+    
+    height:height/20,
+    width:width/1.1,
+    borderBottomWidth:2,
+    borderColor:'#30384d',
+    alignItems:'flex-start',
+    marginTop:10,
     paddingHorizontal:10,
   },
-  hamberger_icon:{
-    fontSize:15,
-    color:'white',
+  header_text:{
+    color:'#30384d',
+    fontWeight:'bold',
+    fontSize:16,
+    marginTop:5,
+    fontFamily:'Montserrat'
+  },
+  searchbar:{
+    backgroundColor:'#f7f7f7',
+    width:width/1.2,
+    height:height/18,
+    alignItems:'center',
+    flexDirection:'row',
+    borderRadius:5,
+    marginTop:5
+
+
   },
   search_icon:{
-    fontSize:20,
-    color:'white',
+    margin:10,
+    color:'#30384d',
+    fontSize:17
+
   },
-  dot_icon:{
-    fontSize:18,
-    color:'white',
-  },
-  text:{
-    color:'white',
-    fontSize:20
+  food_search_label:{
+    paddingLeft:20,
+    color:'#7e8a9a',
+    fontSize:12
   }
+ 
   
 });
+
 
 
 export default Home;

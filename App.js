@@ -18,9 +18,9 @@ const App: () => Node = () => {
   
   return (
 
-      <NavigationContainer>
+      
         <Home/>
-      </NavigationContainer>
+      
   
     
   );
